@@ -1,36 +1,23 @@
-browser.WindowListener.registerDefaultPrefs("defaults/preferences/prefs.js");
+// For Thunderbird 115 and later - using modern WebExtension APIs
+browser.runtime.onInstalled.addListener(() => {
+  // Register the options page
+  browser.menus.create({
+    id: "tbsf_menu_item",
+    title: "Manually sort folders",
+    contexts: ["tools_menu"]
+  });
+});
 
-browser.WindowListener.registerChromeUrl([ 
-  ["content",  "tbsortfolders",          "content/"],
-  ["resource", "tbsortfolders",          "modules/"],
-  ["locale",   "tbsortfolders", "da",    "locale/da/"],
-  ["locale",   "tbsortfolders", "de",    "locale/de/"],
-  ["locale",   "tbsortfolders", "en-US", "locale/en-US/"],
-  ["locale",   "tbsortfolders", "es-ES", "locale/es-ES/"],
-  ["locale",   "tbsortfolders", "fr",    "locale/fr/"],
-  ["locale",   "tbsortfolders", "it",    "locale/it/"],
-  ["locale",   "tbsortfolders", "ja",    "locale/ja/"],
-  ["locale",   "tbsortfolders", "nl",    "locale/nl/"],
-  ["locale",   "tbsortfolders", "nb-NO", "locale/nb-NO/"],
-  ["locale",   "tbsortfolders", "pl",    "locale/pl/"],
-  ["locale",   "tbsortfolders", "pt",    "locale/pt/"],
-  ["locale",   "tbsortfolders", "pt-BR", "locale/pt-BR/"],
-  ["locale",   "tbsortfolders", "ru-RU", "locale/ru-RU/"],
-  ["locale",   "tbsortfolders", "sk",    "locale/sk/"],
-  ["locale",   "tbsortfolders", "sr",    "locale/sr/"],
-  ["locale",   "tbsortfolders", "sv-SE", "locale/sv-SE/"],
-  ["locale",   "tbsortfolders", "zh-CN", "locale/zh-CN/"],
-  ["locale",   "tbsortfolders", "zh-TW", "locale/zh-TW/"],
-]);
+browser.menus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "tbsf_menu_item") {
+    browser.windows.create({
+      url: "content/ui.html",
+      type: "popup",
+      width: 600,
+      height: 400
+    });
+  }
+});
 
-// For Thunderbird 78.0 and later
-browser.WindowListener.registerWindow(
-  "chrome://messenger/content/messenger.xhtml",
-  "chrome://tbsortfolders/content/scripts/messenger.js");
-
-// For Thunderbird 68
-browser.WindowListener.registerWindow(
-  "chrome://messenger/content/messenger.xul",
-  "chrome://tbsortfolders/content/scripts/messenger.js");
-
-browser.WindowListener.startListening();
+// Handle account and folder sorting logic using modern APIs
+// This will need to be implemented in the UI files

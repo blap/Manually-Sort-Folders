@@ -3,33 +3,24 @@ Manually Sort Folders
 
 Tested on:  
 
-Windows 10 x64 with Thunderbird 68.0 (64-bit)  
-Windows 10 x64 with Thunderbird 78.0 (64-bit)  
-Windows 10 x64 with Thunderbird 91.13.0 (64-bit)  
-Windows 10 x64 with Thunderbird 102.2.2 (64-bit)  
-Linux with Thunderbird 102.0b7
+Windows 10 x64 with Thunderbird 115+ (Supernova)
+Windows 10 x64 with Thunderbird 128+ (Current)
+Linux with Thunderbird 128+
 
-NOT tested:  
+This extension for Thunderbird 115+ adds a "Manually sort folders" entry into
+the Tools menu. Use it to manually sort your accounts and folders.
 
-All other setups  
+The extension has been updated to use modern WebExtension APIs and is compatible
+with the latest versions of Thunderbird, including Supernova (TB 115+) and later.
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
-Warning:  
+Features:
+- Sort accounts by drag and drop or alphabetically
+- Sort folders within accounts manually or alphabetically
+- Set a default startup folder
+- Hide folder icons if desired
 
-Please be careful using this updated plugin. It can kill your Thunderbird account config.  
-[Make a backup of your Thunderbird profile](https://support.mozilla.org/en-US/kb/profiles-where-thunderbird-stores-user-data#w_backing-up-a-profile).
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
-
-
-This extension for Thunderbird 68+ adds a “Manually sort folders” entry into
-the Tools menu. Use it to, hum, manually sort your accounts and folders (that was obvious,
-wasn’t it?).
-
-I sometimes put a development version
-[online](https://jonathan.protzenko.fr/manually-sort-folders/), but over the
-past eight years, I’ve only updated this add-on twice, as it is very stable; so your
-best bet is to just stick with the publicly available version on 
+Installation:
+Download the latest version from the releases page or install directly from 
 [ATN](https://addons.thunderbird.net/addon/manually-sort-folders/).
 
 * Screenshots on [the wiki](https://github.com/protz/Manually-Sort-Folders/wiki)

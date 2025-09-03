@@ -8,39 +8,11 @@ const g_ThunderbirdMajorVersion = Services.appinfo.version.split(".")[0];
 Services.scriptloader.loadSubScript("chrome://tbsortfolders/content/folderPane.js", window, "UTF-8");
 
 function onLoad(activatedWhileWindowOpen) {
-  const tbsf_prefs = Services.prefs.getBranch("extensions.tbsortfolders@xulforum.org.");
-  let xulname = 'tbsortfolders';
-  if (g_ThunderbirdMajorVersion >= 91) {
-    xulname += '_91';
-  }
-  let additionalElements = `
-    <menupopup id="taskPopup">
-      <menuitem insertafter="activityManager" id="tbsf_menu_item"
-        oncommand="window.openDialog('chrome://tbsortfolders/content/${xulname}.xhtml', 'ManuallySortFolders',
-          'chrome,titlebar,toolbar,centerscreen,resizable');"
-        label="&tbsf.menuentry.label;" />
-    </menupopup>
-    <panelview id="appMenu-toolsView">
-      <toolbarseparator id="tbsf_appmenu_separator" insertafter="appmenu_addressBook" />
-      <toolbarbutton insertafter="tbsf_appmenu_separator" id="tbsf_appmenu_item" class="subviewbutton subviewbutton-iconic"
-      oncommand="window.openDialog('chrome://tbsortfolders/content/${xulname}.xhtml', 'ManuallySortFolders',
-        'chrome,titlebar,toolbar,centerscreen,resizable');"
-      label="&tbsf.menuentry.label;" />
-    </panelview>`;
-  if (tbsf_prefs.getStringPref("hide_folder_icons")) {
-    additionalElements += `
-     <vbox id="folderPaneBox">
-      <html:style insertafter="folderPaneHeader">
-        #folderTree > treechildren::-moz-tree-image {
-         list-style-image: none;
-         width: 0;
-         height: 0;
-        }
-      </html:style>
-     </vbox>`;
-  }
-  WL.injectElements(additionalElements, ["chrome://tbsortfolders/locale/main.dtd"]);
+  // For modern Thunderbird, we'll add a menu item using the menus API
+  // This is handled in background.js now, so we don't need to do anything here
+  // The XUL injection approach is deprecated
 }
 
 function onUnload(deactivatedWhileWindowOpen) {
+  // Cleanup if needed
 }
