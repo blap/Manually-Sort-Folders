@@ -21,3 +21,9 @@ browser.menus.onClicked.addListener((info, tab) => {
 
 // Handle account and folder sorting logic using modern APIs
 // This will need to be implemented in the UI files
+
+// Enable drag and drop functionality when Thunderbird starts
+browser.runtime.onStartup.addListener(() => {
+  // Enable drag and drop for folder sorting
+  enableFolderDragAndDrop();
+});

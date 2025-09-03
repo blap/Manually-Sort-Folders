@@ -20,6 +20,10 @@
       "background.js"
     ]
   },
+  "options_ui": {
+    "page": "content/preferences.html",
+    "open_in_tab": false
+  },
   "permissions": [
     "accountsRead",
     "messagesRead",

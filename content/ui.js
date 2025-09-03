@@ -243,6 +243,12 @@ function on_load() {
     for (let account of accounts) {
       if (!account.incomingServer)
         continue;
+        
+      // Don't display accounts that use the global inbox
+      if (account.incomingServer.type === "none") {
+        continue;
+      }
+      
       tblog.debug("Account: "+account.incomingServer.rootFolder.prettyName);
       let name = account.incomingServer.rootFolder.prettyName;
       let option = document.createElement("option");
@@ -372,10 +378,19 @@ function on_close() {
 }
 
 function on_refresh() {
+  // Save current scroll position to prevent jumping to top
+  const folderTree = document.getElementById("folderTree");
+  const scrollTop = folderTree.scrollTop;
+  
   tbsf_prefs.setStringPref("tbsf_data", JSON.stringify(tbsf_data));
   for (let win of Services.wm.getEnumerator("mail:3pane")) {
     win.gFolderTreeView._rebuild();
   }
+  
+  // Restore scroll position after refresh
+  setTimeout(() => {
+    folderTree.scrollTop = scrollTop;
+  }, 100);
 }
 
 window.addEventListener("unload", on_refresh, false);
@@ -451,4 +466,46 @@ function on_startup_folder_method_changed() {
 // Updated for HTML interface
 function on_hide_folder_icons_changed() {
   // Implementation for HTML interface
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Load preferences
+  try {
+    document.getElementById('hideFolderIcons').checked = tbsf_prefs.getBoolPref("hide_folder_icons");
+  } catch (e) {
+    document.getElementById('hideFolderIcons').checked = false;
+  }
+  
+  try {
+    document.getElementById('applyToFavorites').checked = tbsf_prefs.getBoolPref("apply_to_favorites");
+  } catch (e) {
+    document.getElementById('applyToFavorites').checked = false;
+  }
+  
+  try {
+    document.getElementById('startupFolderMethod').value = tbsf_prefs.getIntPref("startup_folder_method");
+  } catch (e) {
+    document.getElementById('startupFolderMethod').value = 0;
+  }
+
+  // Add event listeners
+  document.getElementById('hideFolderIcons').addEventListener('change', on_hide_folder_icons_changed);
+  document.getElementById('applyToFavorites').addEventListener('change', on_apply_to_favorites_changed);
+  document.getElementById('startupFolderMethod').addEventListener('change', on_startup_folder_method_changed);
+});
+
+function on_apply_to_favorites_changed() {
+  let applyToFavorites = document.getElementById('applyToFavorites').checked;
+  tbsf_prefs.setBoolPref("apply_to_favorites", applyToFavorites);
+  
+  // If enabled, apply the same sorting logic to favorites
+  if (applyToFavorites) {
+    applySortingToFavorites();
+  }
+}
+
+function applySortingToFavorites() {
+  // This function would apply the current sorting logic to favorites folders
+  // Implementation would depend on how favorites are handled in Thunderbird
+  tblog.debug("Applying sorting to favorites folders");
 }

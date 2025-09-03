@@ -1,0 +1,11 @@
+.xpi
+.template
+Makefile
+TODO
+resources_past
+.git
+.gitignore
+build-extension.ps1
+build-extension.bat
+exclude.txt
+BUILDING.md

@@ -273,3 +273,71 @@
   tblog.debug("Init done");
 
 })()
+
+// Add drag and drop functionality for folder sorting
+function enableFolderDragAndDrop() {
+  // This function enables drag and drop sorting directly in the folder pane
+  let mainWindow = Services.wm.getMostRecentWindow("mail:3pane");
+  if (!mainWindow || !mainWindow.gFolderTreeView) {
+    return;
+  }
+  
+  // Get the folder tree element
+  let folderTree = mainWindow.document.getElementById("folderTree");
+  if (!folderTree) {
+    return;
+  }
+  
+  // Add drag and drop event listeners
+  folderTree.addEventListener("dragstart", handleDragStart, false);
+  folderTree.addEventListener("dragover", handleDragOver, false);
+  folderTree.addEventListener("drop", handleDrop, false);
+  folderTree.addEventListener("dragend", handleDragEnd, false);
+}
+
+function handleDragStart(event) {
+  // Set the drag data
+  event.dataTransfer.effectAllowed = "move";
+  // Store the dragged element
+  event.dataTransfer.setData("text/plain", event.target.id);
+}
+
+function handleDragOver(event) {
+  // Prevent default to allow drop
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
+}
+
+function handleDrop(event) {
+  // Prevent default action
+  event.preventDefault();
+  
+  // Get the dragged element
+  let draggedId = event.dataTransfer.getData("text/plain");
+  let draggedElement = document.getElementById(draggedId);
+  
+  if (!draggedElement) {
+    return;
+  }
+  
+  // Get the drop target
+  let targetElement = event.target;
+  
+  // Reorder the folders in our data structure
+  reorderFolders(draggedElement, targetElement);
+  
+  // Refresh the folder tree
+  for (let win of Services.wm.getEnumerator("mail:3pane")) {
+    win.gFolderTreeView._rebuild();
+  }
+}
+
+function handleDragEnd(event) {
+  // Clean up after drag operation
+}
+
+function reorderFolders(draggedElement, targetElement) {
+  // This function would update the tbsf_data structure to reflect the new order
+  // Implementation would depend on the specific structure of the data
+  tblog.debug("Reordering folders: " + draggedElement.id + " -> " + targetElement.id);
+}

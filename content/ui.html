@@ -172,6 +172,11 @@
       </label>
     </div>
     <div>
+      <label>
+        <input type="checkbox" id="applyToFavorites"> Apply sorting to Favorites folders
+      </label>
+    </div>
+    <div>
       <label>Startup folder:</label>
       <select id="startupFolderMethod">
         <option value="0">Use last folder</option>
@@ -212,6 +217,7 @@
       document.getElementById('accountSelector').addEventListener('change', on_account_changed);
       document.getElementById('sortMethod').addEventListener('change', on_sort_method_changed);
       document.getElementById('hideFolderIcons').addEventListener('change', on_hide_folder_icons_changed);
+      document.getElementById('applyToFavorites').addEventListener('change', on_apply_to_favorites_changed);
       document.getElementById('startupFolderMethod').addEventListener('change', on_startup_folder_method_changed);
       document.getElementById('refreshButton').addEventListener('click', on_refresh);
       document.getElementById('closeButton').addEventListener('click', on_close);
